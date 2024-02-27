@@ -10,6 +10,7 @@ Athlete:
   - Nationality
   - Age
   - Income
+  - Awards
 
 Sport:
   - number of athletes
