@@ -11,6 +11,8 @@ Athlete:
   - Age
   - Income
   - Awards
+  - Club
+  - Foot
 
 Sport:
   - number of athletes
