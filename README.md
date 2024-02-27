@@ -13,6 +13,8 @@ Athlete:
   - Awards
   - Club
   - Foot
+  - Hand
+  - Career Length
 
 Sport:
   - number of athletes
