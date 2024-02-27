@@ -28,6 +28,13 @@ Month:
   - January - December
   - avg income per month from athletes
 
+Club:
+  - Name
+  - Nation
+  - League
+  - Budget
+  - Sport
+
 # Glossary
 Athlete - someone competing in one of the following sports who is considered to be successful: Soccer, Basketball, American Football(inferior), Tennis, and Volleyball.
 
