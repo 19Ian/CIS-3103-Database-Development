@@ -37,6 +37,11 @@ Club:
   - Budget
   - Sport
 
+Award
+  - Name
+  - Sport
+  - Number of Times Received
+
 # Glossary
 Athlete - someone competing in one of the following sports who is considered to be successful: Soccer, Basketball, American Football(inferior), Tennis, and Volleyball.
 
