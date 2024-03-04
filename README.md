@@ -63,3 +63,9 @@ Athlete - someone competing in one of the following sports who is considered to 
 Sport - either Soccer, Basketball, American Football, Tennis, or Volleyball.
 
 Popularity - the popularity of each sport in the world hopefully differentiating between those competing and those just watching.
+
+## Data Links
+https://medium.com/@giacorada/the-fascinating-birth-trend-among-professional-soccer-players-b2a48d015e7d
+https://girlssoccernetwork.com/soccer-success-do-birth-months-matter/
+https://www.kaggle.com/datasets/furkanuluta/football-manager-22-complete-player-dataset?resource=download
+https://www.kaggle.com/datasets/ultimus/football-wages-prediction
