@@ -46,16 +46,16 @@ Award: (Strong Entity) ID: (Name)
   - Number of Times Received P
 
 ## Relationships
-Month has many athletes but possibly none 
-Athletes are born in one month
-Athletes are in one Club
-Athletes are given Awards but possibly none
-Athletes play in at least one Sport
-A Sport is played by many Athletes
-A Sport has a level of Popularity
-A Sport is played by at least one Club
-A Club has many Athletes
-A Club participates in one Sport
+- Month has many athletes but possibly none 
+- Athletes are born in one month
+- Athletes are in one Club
+- Athletes are given Awards but possibly none
+- Athletes play in at least one Sport
+- A Sport is played by many Athletes
+- A Sport has a level of Popularity
+- A Sport is played by at least one Club
+- A Club has many Athletes
+- A Club participates in one Sport
 
 ## Glossary
 Athlete - someone competing in one of the following sports who is considered to be successful: Soccer, Basketball, American Football(inferior), Tennis, and Volleyball.
