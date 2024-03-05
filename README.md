@@ -69,3 +69,6 @@ https://medium.com/@giacorada/the-fascinating-birth-trend-among-professional-soc
 https://girlssoccernetwork.com/soccer-success-do-birth-months-matter/
 https://www.kaggle.com/datasets/furkanuluta/football-manager-22-complete-player-dataset?resource=download
 https://www.kaggle.com/datasets/ultimus/football-wages-prediction
+
+## ER Diagram
+![Database ER diagram (crow's foot)](https://github.com/19Ian/CIS-3103-Database-Development/assets/79172931/c23c7784-7038-445f-9379-f751ffbf2fa3)
