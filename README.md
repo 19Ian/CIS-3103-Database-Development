@@ -71,4 +71,4 @@ https://www.kaggle.com/datasets/furkanuluta/football-manager-22-complete-player-
 https://www.kaggle.com/datasets/ultimus/football-wages-prediction
 
 ## ER Diagram
-![Database ER diagram (crow's foot)](https://github.com/19Ian/CIS-3103-Database-Development/assets/79172931/c23c7784-7038-445f-9379-f751ffbf2fa3)
+![Database ER diagram (crow's foot) (1)](https://github.com/19Ian/CIS-3103-Database-Development/assets/79172931/276d1a3b-a05a-40e3-a806-20ea41625877)
