@@ -3,7 +3,7 @@
 This is to track, store, analyze the birth month of successful athletes in different sports to see any trends in when successful athletes are born. It'll track the birth month, day(if possible), what sport the athlete is competing in, name, nationality, and probably some others I think of along the way.
 
 ## Entities
-Athlete: (Strong Entity) ID: (First Name, Last Name)
+Athlete: (Strong Entity because it has a Primary Key and is not reliant on a foreign key) ID: (First Name, Last Name)
   - First Name R
   - Last Name R
   - Birthdate R
@@ -17,22 +17,22 @@ Athlete: (Strong Entity) ID: (First Name, Last Name)
   - Hand
   - Career Length R
 
-Sport: (Strong Entity) ID: (Sport Name)
+Sport: (Strong Entity because it has a Primary Key and is not reliant on a foreign key) ID: (Sport Name)
   - Sport Name R *U*
   - number of athletes R P
   - popularity R
 
-Popularity: (Strong Entity) ID: (Sport Name)
+Popularity: (Strong Entity because it has a Primary Key and is not reliant on a foreign key) ID: (Sport Name)
   - Sport Name R *U*
   - percent of people competing R
   - percent of people watching R
 
-Month: (Strong Entity) ID: (Name)
+Month: (Strong Entity because it has a Primary Key and is not reliant on a foreign key) ID: (Name)
   - Name R *U*
   - number of athletes in a month R P
   - avg income per month from athletes R
 
-Club: (Strong Entity) ID: (Name)
+Club: (Strong Entity because it has a Primary Key and is not reliant on a foreign key) ID: (Name)
   - Name R *U*
   - Nation R
   - League R
@@ -40,7 +40,7 @@ Club: (Strong Entity) ID: (Name)
   - Sport Name R
   - Athletes R P
 
-Award: (Strong Entity) ID: (Name)
+Award: (Strong Entity because it has a Primary Key and is not reliant on a foreign key) ID: (Name)
   - Name R *U*
   - Sport Name R
   - Number of Times Received P
