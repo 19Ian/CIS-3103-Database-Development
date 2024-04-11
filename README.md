@@ -2,6 +2,8 @@
 
 This is to track, store, analyze the birth month of successful athletes in different sports to see any trends in when successful athletes are born. It'll track the birth month, day(if possible), what sport the athlete is competing in, name, nationality, and probably some others I think of along the way.
 
+To run: "python ConnectToAthleteDatabase.py config.json"x
+
 ## Entities
 Athlete: (Strong Entity because it has a Primary Key and is not reliant on a foreign key) ID: (First Name, Last Name)
   - First Name R
