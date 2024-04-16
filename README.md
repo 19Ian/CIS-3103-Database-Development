@@ -59,6 +59,22 @@ Award: (Strong Entity because it has a Primary Key and is not reliant on a forei
 - A Club has many Athletes
 - A Club participates in one Sport
 
+## Queries
+  SELECT FirstName, LastName, Birthdate, Salary AS Salary_Pounds
+  FROM Athlete
+  ORDER BY Birthdate DESC
+
+  SELECT FirstName, LastName, Height AS Height_CM, Weight AS Weight_KG
+  FROM Athlete
+  ORDER BY LastName DESC;
+
+  SELECT FirstName, LastName, Salary AS Salary_Pounds, Nationality, Birthdate
+  FROM Athlete
+  ORDER BY Salary
+  
+  SELECT AVG(Height) AS Avg_Height_CM, AVG(Weight) AS Avg_Weight_KG
+  FROM Athlete;
+
 ## Glossary
 Athlete - someone competing in one of the following sports who is considered to be successful: Soccer, Basketball, American Football(inferior), Tennis, and Volleyball.
 
