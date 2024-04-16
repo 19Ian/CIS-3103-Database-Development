@@ -1,5 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode
+import numpy as np
+import matplotlib.pyplot as plt 
 
 import csv
 import sys
@@ -49,9 +51,9 @@ except mysql.connector.Error as err:
 
 else:
     dataCursor = reservationConnection.cursor()
-
-    for i in range(1,1000):
-        dataQuery = ("INSERT INTO Athlete "
+    #### INSERT DATA INTO DATABASE ####
+    for i in range(1,189333):
+        dataQuery = ("INSERT IGNORE INTO Athlete "
                     "(ID, FirstName, LastName, Birthdate, Salary, Foot, Height, Weight, Age, Nationality) "
                     "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                     )
@@ -94,33 +96,4 @@ else:
         dataCursor.execute(dataQuery, (dataList[i][0], firstName, lastName, birthDate, int(salary), foot
                                        , int(height), int(weight), int(age), nationality))
     reservationConnection.commit()
-
-    # # Print Bar Chart
-    # getBirthdateQuery = ("SELECT MONTH(Birthdate) "
-    #                    "FROM Athlete")
-    # dataCursor.execute(getBirthdateQuery)
-    # for row in dataCursor.fetchall():
-    #     if(row[0] == 1): monthData["January"] += 1
-    #     if(row[0] == 2): monthData["February"] += 1
-    #     if(row[0] == 3): monthData["March"] += 1
-    #     if(row[0] == 4): monthData["April"] += 1
-    #     if(row[0] == 5): monthData["May"] += 1
-    #     if(row[0] == 6): monthData["June"] += 1
-    #     if(row[0] == 7): monthData["July"] += 1
-    #     if(row[0] == 8): monthData["August"] += 1
-    #     if(row[0] == 9): monthData["September"] += 1
-    #     if(row[0] == 1): monthData["October"] += 1
-    #     if(row[0] == 1): monthData["November"] += 1
-    #     if(row[0] == 1): monthData["December"] += 1
-
-    #     # print(monthData)
-
-    # print("")
-    # for month in monthData:
-    #     string = "" + month + ": " + (10 - len(month))*" "
-    #     for i in range(monthData[month]):
-    #         string += "|"
-    #     print(string)
-
-    # print("")
     reservationConnection.close()
