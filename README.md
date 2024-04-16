@@ -72,5 +72,14 @@ https://girlssoccernetwork.com/soccer-success-do-birth-months-matter/
 https://www.kaggle.com/datasets/furkanuluta/football-manager-22-complete-player-dataset?resource=download
 https://www.kaggle.com/datasets/ultimus/football-wages-prediction
 
+## Table
+    Player-Name | Salary | Birthdate | Prefered Foot | Position
+
+X = birthMonth
+Y = Salary
+Point-shape = Prefered Foot
+Color = Position
+Point-label = Player-Name
+
 ## ER Diagram
 ![Database ER diagram (crow's foot) (1)](https://github.com/19Ian/CIS-3103-Database-Development/assets/79172931/276d1a3b-a05a-40e3-a806-20ea41625877)

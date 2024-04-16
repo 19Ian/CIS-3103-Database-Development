@@ -9,7 +9,7 @@ dataList = []
 monthData = {"January": 0, "February": 0, "March": 0, "April": 0, "May": 0, "June":0, "July": 0, "August": 0, "September":0,
              "October": 0, "November": 0, "December": 0}
 
-with open('archive (2)/fm2023.csv', encoding="utf8") as f:
+with open('fm2023.csv', encoding="utf8") as f:
     readObj = csv.reader(f)
     for row in readObj:
         dataList.append(row)
@@ -50,10 +50,10 @@ except mysql.connector.Error as err:
 else:
     dataCursor = reservationConnection.cursor()
 
-    for i in range(1,100):
+    for i in range(1,1000):
         dataQuery = ("INSERT INTO Athlete "
-                    "(ID, FirstName, LastName, Birthdate) "
-                    "VALUES (%s, %s, %s, %s);"
+                    "(ID, FirstName, LastName, Birthdate, Salary, Foot, Height, Weight, Age, Nationality) "
+                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                     )
         #Setup Date
         date = dataList[i][3].split()[0]
@@ -72,34 +72,55 @@ else:
             lastName = dataList[i][2].split()[1]
         else:
             lastName = ""
-        # dataCursor.execute(dataQuery, (dataList[i][0], firstName, lastName, birthDate))
+
+        #Setup Salary
+        salary = dataList[i][16].split()[0][1:]
+        if(salary == '' or salary == '/A'):
+            salary = "00000"
+        else:
+            salary = salary.replace(',','')
+
+        #Setup Foot
+        foot = dataList[i][8].split()[0]
+
+        #Setup Height Weight Age
+        height = dataList[i][12].split()[0]
+        weight = dataList[i][13].split()[0]
+        age = dataList[i][14]
+
+        #Setup Nationality
+        nationality = dataList[i][4]
+
+        dataCursor.execute(dataQuery, (dataList[i][0], firstName, lastName, birthDate, int(salary), foot
+                                       , int(height), int(weight), int(age), nationality))
     reservationConnection.commit()
 
-    getBirthdateQuery = ("SELECT MONTH(Birthdate) "
-                       "FROM Athlete")
-    dataCursor.execute(getBirthdateQuery)
-    for row in dataCursor.fetchall():
-        if(row[0] == 1): monthData["January"] += 1
-        if(row[0] == 2): monthData["February"] += 1
-        if(row[0] == 3): monthData["March"] += 1
-        if(row[0] == 4): monthData["April"] += 1
-        if(row[0] == 5): monthData["May"] += 1
-        if(row[0] == 6): monthData["June"] += 1
-        if(row[0] == 7): monthData["July"] += 1
-        if(row[0] == 8): monthData["August"] += 1
-        if(row[0] == 9): monthData["September"] += 1
-        if(row[0] == 1): monthData["October"] += 1
-        if(row[0] == 1): monthData["November"] += 1
-        if(row[0] == 1): monthData["December"] += 1
+    # # Print Bar Chart
+    # getBirthdateQuery = ("SELECT MONTH(Birthdate) "
+    #                    "FROM Athlete")
+    # dataCursor.execute(getBirthdateQuery)
+    # for row in dataCursor.fetchall():
+    #     if(row[0] == 1): monthData["January"] += 1
+    #     if(row[0] == 2): monthData["February"] += 1
+    #     if(row[0] == 3): monthData["March"] += 1
+    #     if(row[0] == 4): monthData["April"] += 1
+    #     if(row[0] == 5): monthData["May"] += 1
+    #     if(row[0] == 6): monthData["June"] += 1
+    #     if(row[0] == 7): monthData["July"] += 1
+    #     if(row[0] == 8): monthData["August"] += 1
+    #     if(row[0] == 9): monthData["September"] += 1
+    #     if(row[0] == 1): monthData["October"] += 1
+    #     if(row[0] == 1): monthData["November"] += 1
+    #     if(row[0] == 1): monthData["December"] += 1
 
-        print(monthData)
+    #     # print(monthData)
 
-    print("")
-    for month in monthData:
-        string = "" + month + ": " + (10 - len(month))*" "
-        for i in range(monthData[month]):
-            string += "|"
-        print(string)
+    # print("")
+    # for month in monthData:
+    #     string = "" + month + ": " + (10 - len(month))*" "
+    #     for i in range(monthData[month]):
+    #         string += "|"
+    #     print(string)
 
-    print("")
+    # print("")
     reservationConnection.close()
