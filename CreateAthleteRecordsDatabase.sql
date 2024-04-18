@@ -2,56 +2,27 @@ drop database AthleteRecords;
 create database AthleteRecords;
 use AthleteRecords;
 
-create table Month (
-	Name varchar(10) CHECK (Name IN ("January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December")) NOT NULL UNIQUE default("Unknown") ,
-    NumberOfAthletes int NOT NULL default(0),
-    AverageIncomeOfAthletes float NOT NULL default(0.0)
+
+create table AthleteSalary (
+	AthleteID int NOT NULL UNIQUE PRIMARY KEY,
+    Salary int NOT NULL default (00000),
+    Club varchar(30) NOT NULL default("N/A")
 );
 
-create table Popularity(
-	SportName varchar(20) NOT NULL UNIQUE default("Soccer"),
-    PercentPeopleWatch float NOT NULL default(0.0),
-    PercentPeopleCompete float NOT NULL default(0.0)
-);
-
-create table Award (
-	Name varchar(20) NOT NULL UNIQUE default("Unknown"),
-    SportName varchar(20) NOT NULL default("Soccer"),
-	TimesReceived int default(0),
-    AthleteID int NOT NULL UNIQUE
-);
-
-create table Sport(
-	Name varchar(20) NOT NULL UNIQUE default("Soccer"),
-    NumberOfAthletes int NOT NULL default(0),
-    FOREIGN KEY (Name) references Popularity(SportName)
+create table AthleteBiometrics (
+	AthleteID int NOT NULL UNIQUE PRIMARY KEY,
+	Birthdate Date NOT NULL default (current_date),
+	Foot varchar(6) CHECK (Foot IN ('Right', 'Left', 'Either')),
+    Height int NOT NULL default (0) CHECK(Height > 0 AND Height < 200),
+    Weight int NOT NULL default (0) CHECK(Weight > 0 AND Weight < 100),
+    Age int NOT NULL default (0) CHECK(Age > 0 AND Age < 100)
 );
 
 create table Athlete (
-	ID int NOT NULL UNIQUE,
+	ID int NOT NULL UNIQUE PRIMARY KEY,
 	FirstName varchar(20) NOT NULL default("Unknown"),
-    LastName varchar(20) NOT NULL default("Unknown"),
-    Birthdate Date NOT NULL default (current_date),
+    LastName varchar(60) NOT NULL default("Unknown"),
 	Nationality varchar(5) NOT NULL default("N/A"),
-	Salary int NOT NULL default (00000),
---     Club varchar(20) NOT NULL UNIQUE,
-	Foot varchar(6) CHECK (Foot IN ('Right', 'Left', 'Either')),
-    Height int NOT NULL default (0),
-    Weight int NOT NULL default (0),
-    Age int NOT NULL default (0)
---     CareerLength int NOT NULL,
---     PRIMARY KEY (ID),
---     FOREIGN KEY (ID) references Award(AthleteID),
---     FOREIGN KEY (Sport) references Sport(Name)
+    FOREIGN KEY (ID) references AthleteBiometrics(AthleteID) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (ID) references AthleteSalary(AthleteID) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
-create table Club (
-	ClubName varchar(20) NOT NULL UNIQUE,
-    Nation varchar(20) NOT NULL default("Unknown"),
-    League varchar(20) NOT NULL default("Unknown"),
-    Budget float NOT NULL default(0.0),
-    SportName varchar(15) NOT NULL default("Soccer"),
-    FOREIGN KEY (ClubName) references Athlete(Club)
-);
-
