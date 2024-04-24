@@ -45,7 +45,7 @@ else:
 
 #### SETUP MONTH DATA
 getBirthdateQuery = ("SELECT MONTH(Birthdate) "
-                       "FROM Athlete")
+                       "FROM AthleteBiometrics")
 dataCursor.execute(getBirthdateQuery)
 for row in dataCursor.fetchall():
     if(row[0] == 1): monthData["January"] += 1
@@ -83,7 +83,8 @@ def Born_In_Months():
 #### GET BIRTHMONTH, SALARY BAR GRAPH ####
 def Birthmonth_Salary_Bar():
     getBirthdateSalaryQuery = ("SELECT MONTH(Birthdate), AVG(Salary) AS AVG_Salary_Pounds "
-                                "FROM Athlete "
+                                "FROM AthleteBiometrics INNER JOIN AthleteSalary "
+                                "ON AthleteBiometrics.AthleteID = AthleteSalary.AthleteID "
                                 "GROUP BY MONTH(Birthdate) "
                                 "ORDER BY MONTH(Birthdate);")
     dataCursor.execute(getBirthdateSalaryQuery)
@@ -111,11 +112,11 @@ def Birthmonth_Salary_Bar():
 
 
 #### GET NAME, WEIGHT, HEIGHT ####
-    # TODO:too many points to plot
+    # TODO:too many points to plot, DISTINCT
 def Name_Weight_Height(firstRow, lastRow):
-    getHeightWeightQuery = ("SELECT FirstName, LastName, Height AS Height_CM, Weight AS Weight_KG "
+    getHeightWeightQuery = ("SELECT DISTINCT FirstName, LastName, Height AS Height_CM, Weight AS Weight_KG "
                                 "FROM Athlete "
-                                "ORDER BY LastName DESC;")
+                                "INNER JOIN AthleteBiometrics ON ID = AthleteID;")
     dataCursor.execute(getHeightWeightQuery)
 
     firstNames = []
@@ -130,12 +131,6 @@ def Name_Weight_Height(firstRow, lastRow):
         lastNames.append(data[i][1])
         heights.append(data[i][2])
         weights.append(data[i][3])
-    
-    # for row in dataCursor.fetchall():
-    #     firstNames.append(row[0])
-    #     lastNames.append(row[1])
-    #     heights.append(row[2])
-    #     weights.append(row[3])
 
     fig = plt.figure(figsize = (14, 10))
     plt.scatter(heights, weights)
@@ -148,11 +143,39 @@ def Name_Weight_Height(firstRow, lastRow):
 
     plt.show()
 
+#### GET NUM_ATHLETES IN NATIONALITIES ####
+def Num_Athletes_Nationalities_Bar():
+    getNumAthletesQuery = ("SELECT Nationality AS Country, COUNT(*) AS Count "
+                                "FROM Athlete " 
+                                "GROUP BY Nationality "
+                                "ORDER BY Nationality; ")
+    dataCursor.execute(getNumAthletesQuery)
+
+    countries = []
+    counts = []
+    
+    for row in dataCursor.fetchall():
+        countries.append(row[0])
+        counts.append(row[1])
+
+    fig = plt.figure(figsize = (13, 5))
+
+    # creating the bar plot
+    plt.bar(countries, counts, color ='gray', 
+            width = 0.1)
+    plt.tick_params(axis='x', which='major', labelsize=1)
+
+    plt.xlabel("Country")
+    plt.ylabel("Num Athletes")
+    plt.title("Number of Athletes Born in Each Country")
+    plt.show()
+
 
 #### PLOTS ####
 # Born_In_Months()
 # Birthmonth_Salary_Bar()
-Name_Weight_Height(50000, 51000)
+# Name_Weight_Height(50000, 51000)
+Num_Athletes_Nationalities_Bar()
 
 
 reservationConnection.close()

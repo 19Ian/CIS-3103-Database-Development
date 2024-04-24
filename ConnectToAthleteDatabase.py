@@ -16,7 +16,6 @@ with open('fm2023.csv', encoding="utf8") as f:
     for row in readObj:
         dataList.append(row)
 
-# print(dataList[1])
 
 if __name__ == "__main__":  
     ## Get the configuration file 
@@ -24,10 +23,6 @@ if __name__ == "__main__":
     print("Configuration file location: {0}".format(configFileLocation))   
     configFile = open(configFileLocation)
     configFileJSON = json.load(configFile)
-    # print("user: " + configFileJSON["user"])
-    # print("password: " + configFileJSON["password"])
-    # print("host: " + configFileJSON["host"])
-    # print("database: " + configFileJSON["database"])
 
 
 def setupConnection(user, password, host, database):
@@ -51,12 +46,28 @@ except mysql.connector.Error as err:
 
 else:
     dataCursor = reservationConnection.cursor()
-    #### INSERT DATA INTO DATABASE ####
+    #### INSERT DATA INTO ATHLETE TABLE ####
     for i in range(1,189333):
-        dataQuery = ("INSERT IGNORE INTO Athlete "
-                    "(ID, FirstName, LastName, Birthdate, Salary, Foot, Height, Weight, Age, Nationality) "
-                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
-                    )
+        
+        insertIntoAthlete = ("INSERT IGNORE INTO Athlete "
+            "(ID, FirstName, LastName, Nationality) "
+            "VALUES (%s, %s, %s, %s);"
+            )
+        
+        insertIntoAthleteBiometrics = ("INSERT IGNORE INTO AthleteBiometrics "
+            "(AthleteID, Birthdate, Foot, Height, Weight, Age) "
+            "VALUES (%s, %s, %s, %s, %s, %s);"
+            )
+        
+        insertIntoAthleteSalary = ("INSERT IGNORE INTO AthleteSalary "
+            "(AthleteID, Salary, Club) "
+            "VALUES (%s, %s, %s);"
+            )
+        
+
+        #Setup ID
+        athleteID = dataList[i][0]
+
         #Setup Date
         date = dataList[i][3].split()[0]
         day = date.split("/")[0]
@@ -93,7 +104,12 @@ else:
         #Setup Nationality
         nationality = dataList[i][4]
 
-        dataCursor.execute(dataQuery, (dataList[i][0], firstName, lastName, birthDate, int(salary), foot
-                                       , int(height), int(weight), int(age), nationality))
+        #Setup Club
+        club = dataList[i][6]
+        
+        dataCursor.execute(insertIntoAthleteBiometrics, (athleteID, birthDate, foot, int(height), int(weight), int(age)))
+        dataCursor.execute(insertIntoAthleteSalary, (athleteID, int(salary), club))
+        dataCursor.execute(insertIntoAthlete, (athleteID, firstName, lastName, nationality))
+
     reservationConnection.commit()
     reservationConnection.close()
