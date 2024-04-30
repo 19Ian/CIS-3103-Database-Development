@@ -3,6 +3,7 @@ from mysql.connector import errorcode
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt 
+import matplotlib.colors as mcolors
 
 import csv
 import sys
@@ -113,40 +114,82 @@ def Birthmonth_Salary_Bar():
 
 #### GET NAME, WEIGHT, HEIGHT ####
     # TODO:too many points to plot, DISTINCT
-def Name_Weight_Height(firstRow, lastRow):
-    getHeightWeightQuery = ("SELECT DISTINCT FirstName, LastName, Height AS Height_CM, Weight AS Weight_KG "
-                                "FROM Athlete "
-                                "INNER JOIN AthleteBiometrics ON ID = AthleteID;")
+def Name_Weight_Height():
+    getHeightWeightQuery = ("SELECT MONTH(Birthdate), AVG(Height) AS Height_CM, AVG(Weight) AS Weight_KG "
+                                "FROM AthleteBiometrics "
+                                "GROUP BY MONTH(Birthdate)"
+                                "ORDER BY MONTH(Birthdate)")
     dataCursor.execute(getHeightWeightQuery)
 
-    firstNames = []
-    lastNames = []
+    monthData2 = {"January": 0, "February": 0, "March": 0, "April": 0, "May": 0, "June":0, "July": 0, "August": 0, "September":0,
+             "October": 0, "November": 0, "December": 0}
     heights = []
     weights = []
 
-    data = dataCursor.fetchall()
+    for row in dataCursor.fetchall():
+        if(row[0] == 1): monthData2["January"] += 1
+        if(row[0] == 2): monthData2["February"] += 1
+        if(row[0] == 3): monthData2["March"] += 1
+        if(row[0] == 4): monthData2["April"] += 1
+        if(row[0] == 5): monthData2["May"] += 1
+        if(row[0] == 6): monthData2["June"] += 1
+        if(row[0] == 7): monthData2["July"] += 1
+        if(row[0] == 8): monthData2["August"] += 1
+        if(row[0] == 9): monthData2["September"] += 1
+        if(row[0] == 10): monthData2["October"] += 1
+        if(row[0] == 11): monthData2["November"] += 1
+        if(row[0] == 12): monthData2["December"] += 1
 
-    for i in range(firstRow,lastRow):
-        firstNames.append(data[i][0])
-        lastNames.append(data[i][1])
-        heights.append(data[i][2])
-        weights.append(data[i][3])
+        heights.append(row[1])
+        weights.append(row[2]) 
 
-    fig = plt.figure(figsize = (14, 10))
-    plt.scatter(heights, weights)
-    plt.xlabel("Height (cm)")
-    plt.ylabel("Weight (kg)")
-    plt.title("Height and Weight")
+    barWidth = 0.25
+    br1 = np.arange(12) 
+    br2 = [x + barWidth for x in br1]
 
-    for i, txt in enumerate(lastNames):
-        plt.annotate(txt, (heights[i], weights[i]), fontsize=5)
+    # PLOT BOTH
+    plt.subplot(1,2,2)
+    plt.bar(br1, weights, color =mcolors.to_rgb("cornflowerblue"), width = barWidth, 
+            edgecolor ='grey', label ='Weights') 
+    plt.bar(br2, heights, color =mcolors.to_rgb("mediumblue"), width = barWidth, 
+            edgecolor ='grey', label ='Heights') 
+
+    # Adding Xticks 
+    plt.xlabel('Month', fontweight ='bold', fontsize = 15) 
+    plt.ylabel('Heights(CM)/Weights(KG)', fontweight ='bold', fontsize = 15) 
+    plt.xticks([r + barWidth for r in range(12)], 
+            ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+    plt.legend()
+
+    # PLOT WEIGHTS
+    plt.subplot(2,2,1)
+    plt.bar(br1, weights, color =mcolors.to_rgb("mediumpurple"), width = barWidth, 
+            edgecolor ='grey', label ='Weights')
+
+    # Adding Xticks 
+    plt.xlabel('Month', fontweight ='bold', fontsize = 15) 
+    plt.ylabel('Weights(KG)', fontweight ='bold', fontsize = 15) 
+    plt.xticks([r for r in range(12)], 
+            ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+
+    # PLOT HEIGHTS
+    plt.subplot(2,2,3)
+    plt.bar(br1, heights, color =mcolors.to_rgb("violet"), width = barWidth, 
+            edgecolor ='grey', label ='Heights')
+
+    # Adding Xticks 
+    plt.xlabel('Month', fontweight ='bold', fontsize = 15) 
+    plt.ylabel('Heights(CM)', fontweight ='bold', fontsize = 15)
+
+    plt.xticks([r for r in range(12)], 
+            ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
 
     plt.show()
 
 #### GET NUM_ATHLETES IN NATIONALITIES ####
 def Num_Athletes_Nationalities_Bar():
     getNumAthletesQuery = ("SELECT Nationality AS Country, COUNT(*) AS Count "
-                                "FROM Athlete " 
+                                "FROM Athlete "
                                 "GROUP BY Nationality "
                                 "ORDER BY Nationality; ")
     dataCursor.execute(getNumAthletesQuery)
@@ -155,15 +198,16 @@ def Num_Athletes_Nationalities_Bar():
     counts = []
     
     for row in dataCursor.fetchall():
-        countries.append(row[0])
-        counts.append(row[1])
+        if row[1] > 500:
+            countries.append(row[0])
+            counts.append(row[1])
 
     fig = plt.figure(figsize = (13, 5))
 
     # creating the bar plot
     plt.bar(countries, counts, color ='gray', 
             width = 0.1)
-    plt.tick_params(axis='x', which='major', labelsize=1)
+    plt.tick_params(axis='x', which='major', labelsize=5)
 
     plt.xlabel("Country")
     plt.ylabel("Num Athletes")
@@ -174,8 +218,8 @@ def Num_Athletes_Nationalities_Bar():
 #### PLOTS ####
 # Born_In_Months()
 # Birthmonth_Salary_Bar()
-# Name_Weight_Height(50000, 51000)
-Num_Athletes_Nationalities_Bar()
+Name_Weight_Height()
+# Num_Athletes_Nationalities_Bar()
 
 
 reservationConnection.close()
