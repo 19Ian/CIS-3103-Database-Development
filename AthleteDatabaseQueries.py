@@ -79,6 +79,7 @@ def Born_In_Months():
     plt.xlabel("Month of the Year")
     plt.ylabel("No. of athletes born")
     plt.title("Athletes Born In Months")
+    plt.savefig('Born_In_Months.png')
     plt.show()
 
 #### GET BIRTHMONTH, SALARY BAR GRAPH ####
@@ -108,8 +109,8 @@ def Birthmonth_Salary_Bar():
     plt.xlabel("Month of the Year")
     plt.ylabel("AVG Salary of Athletes")
     plt.title("Salary's of Athletes Born in Months")
+    plt.savefig('Birthmonth_Salary.png')
     plt.show()
-    # plt.savefig('plot3.png')
 
 
 #### GET NAME, WEIGHT, HEIGHT ####
@@ -183,7 +184,8 @@ def Name_Weight_Height():
 
     plt.xticks([r for r in range(12)], 
             ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
-
+  
+    plt.savefig("Weight_Height.png")
     plt.show()
 
 #### GET NUM_ATHLETES IN NATIONALITIES ####
@@ -212,14 +214,15 @@ def Num_Athletes_Nationalities_Bar():
     plt.xlabel("Country")
     plt.ylabel("Num Athletes")
     plt.title("Number of Athletes Born in Each Country")
+    plt.savefig("Nationality.png")
     plt.show()
 
 
 #### PLOTS ####
-# Born_In_Months()
-# Birthmonth_Salary_Bar()
+Born_In_Months()
+Birthmonth_Salary_Bar()
 Name_Weight_Height()
-# Num_Athletes_Nationalities_Bar()
+Num_Athletes_Nationalities_Bar()
 
 
 reservationConnection.close()
